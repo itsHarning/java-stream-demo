@@ -2,5 +2,18 @@ package ek.osnb.streamdemo.funcInterfaces;
 
 import java.util.function.Consumer;
 
-public interface Payment {
+@FunctionalInterface
+public interface Payment extends Consumer<Double> {
+
+    void pay(double amount);
+
+    default void accept(Double amount) {
+        before();
+        pay(amount);
+        after();
+    }
+
+    default void before() {}
+    default void after() {}
+
 }
