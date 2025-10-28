@@ -36,14 +36,41 @@ public class Streams01 {
         filteredCarsOnSedan.forEach(System.out::println);
 
         // TODO: Get car makes
+        List<String> makeList = cars.stream()
+                .map(c -> c.make)
+                .distinct()
+                .toList();
+//                .forEach(System.out::println);
+        makeList.forEach(System.out::println);
 
         // TODO: Show make, model, make, model etc.
+        cars.stream()
+                .map(c -> List.of(c.make, c.model))
+                .flatMap(Collection::stream)
+                .forEach(System.out::println);
 
         // TODO: Count no of sedans
+        long numOfSedan = cars.stream()
+                .filter(c -> c.type.equals(Type.SEDAN))
+                .count();
+        System.out.println("Number of sedans: " + numOfSedan);
 
         // TODO: partioningBy SUVs
+//        Map<Boolean, List<Car>> partition = cars.stream()
+//                .collect(Collectors.partitioningBy(c -> c.type.equals(Type.SUV)));
+//        System.out.println(partition);
+
+        cars.stream()
+                .collect(Collectors.partitioningBy(c -> c.type.equals(Type.SUV)))
+                .forEach((a, b) -> System.out.println(a + "- " + b));
 
         // TODO: GroupBy type
+//        Map<Type, List<Car>> group = cars.stream()
+//                .collect(Collectors.groupingBy(c -> c.type));
+
+        cars.stream()
+                .collect(Collectors.groupingBy(c -> c.type))
+                .forEach((a, b) -> System.out.println(a + "- " + b));
 
     }
 }
