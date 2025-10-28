@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -40,37 +41,41 @@ public class Streams01 {
                 .map(c -> c.make)
                 .distinct()
                 .toList();
-//                .forEach(System.out::println);
         makeList.forEach(System.out::println);
+//                .forEach(System.out::println);
+
+        System.out.println();
 
         // TODO: Show make, model, make, model etc.
         cars.stream()
-                .map(c -> List.of(c.make, c.model))
+                .map(c -> List.of(c.make,c.model))
                 .flatMap(Collection::stream)
                 .forEach(System.out::println);
 
+        System.out.println();
+
         // TODO: Count no of sedans
-        long numOfSedan = cars.stream()
-                .filter(c -> c.type.equals(Type.SEDAN))
+        long noOfSedan = cars.stream()
+                .filter(c -> c.type.equals(Type.TRUCK))
                 .count();
-        System.out.println("Number of sedans: " + numOfSedan);
+        System.out.println("Number of sedans: " + noOfSedan);
+
+        System.out.println();
 
         // TODO: partioningBy SUVs
-//        Map<Boolean, List<Car>> partition = cars.stream()
-//                .collect(Collectors.partitioningBy(c -> c.type.equals(Type.SUV)));
-//        System.out.println(partition);
-
-        cars.stream()
+//        Map<Boolean,List<Car>> partion =
+                cars.stream()
                 .collect(Collectors.partitioningBy(c -> c.type.equals(Type.SUV)))
-                .forEach((a, b) -> System.out.println(a + "- " + b));
+                        .forEach((a,b) -> System.out.println(a + "- " + b) );
+//        System.out.println(partion);
 
-        // TODO: GroupBy type
-//        Map<Type, List<Car>> group = cars.stream()
-//                .collect(Collectors.groupingBy(c -> c.type));
+        System.out.println();
 
+        // TODO: groupingBy type
         cars.stream()
-                .collect(Collectors.groupingBy(c -> c.type))
-                .forEach((a, b) -> System.out.println(a + "- " + b));
+                .collect(Collectors.groupingBy(c -> c.make))
+                .forEach((a,b) -> System.out.println(a + "- " + b) );
+//        System.out.println(a);
 
     }
 }
